@@ -12,10 +12,14 @@ function App() {
 
   const [hasPhoto, setHasPhoto] = useState(false);
   const [text, setText] = useState();
+  const [showtext,setShowText]=useState();
+
+  const [imgsData,setImgsData]=useState([]);
+  const [snapDep,setSnapDep]=useState(0);
 
   const getVideo = () => {
     navigator.mediaDevices.getUserMedia({
-      video: { width: 480, height: 320 }
+      video: { width: 200, height: 144 }
     })
       .then(stream => {
         let video = videoRef.current;
@@ -25,8 +29,8 @@ function App() {
   }
 
   const takePhoto = () => {
-    const width = 480;
-    const height = 320;
+    const width = 200;
+    const height = 144;
 
     let video = videoRef.current;
     let photo = photoRef.current;
@@ -36,10 +40,10 @@ function App() {
 
     let ctx = photo.getContext('2d');
     ctx.drawImage(video, 0, 0, width, height);
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'white';
     ctx.textAlign = 'left';
-    ctx.font = 'bold 144px Helvatica';
-    ctx.fillText(text, 12, 300);
+    ctx.font = 'bold 48px Helvatica';
+    ctx.fillText(text, 12, 120);
     setHasPhoto(true);
   }
 
@@ -55,15 +59,20 @@ function App() {
     link.href = photoRef.current.toDataURL('image/png');
     setScreenShotImgData(photoRef.current.toDataURL('image/png'))
     link.click();
-    // get 可以這樣寫比較好閱讀
-    // axios.get('http://localhost:3001/save', {
-    //   params: {
-    //     id: 123,
-    //   }
-    // })
-    axios.get(`http://localhost:3001/upload?screenShotImg=${photoRef.current.toDataURL('image/png')}`);
-    // setIsClick(true);
+    axios.post('http://localhost:3001/upload', {
+
+      imgData: photoRef.current.toDataURL('image/png'),
+    });
+    setSnapDep(snapDep+1)
   }
+
+  useEffect(()=>{
+    axios.get('http://localhost:3001/view').then((response)=>{
+      console.log(response)
+      setImgsData(response.data)
+
+    })
+  },[snapDep])
 
   return (
     <div className='container'>
@@ -72,27 +81,35 @@ function App() {
         <div className="main">
           <div className='left'>
             <div className='preview'>
+              <h3 className='snaptxt'>{showtext}</h3>
               <video ref={videoRef}></video>
 
             </div>
 
-            <button onClick={takePhoto}>snap</button>
+            
+            <input onChange={(e) => setText(e.target.value)} />
+              <button onClick={(e) => setShowText(text)}>顯示文字</button>
+              <button onClick={takePhoto}>snap</button>
 
             <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
               <canvas ref={photoRef}></canvas>
-              {screenShotImgData}
-              <input onChange={(e) => setText(e.target.value)} />
-              <button>顯示文字</button>
+             
+              
             </div>
             <button onClick={handleDataUrl} >save</button>
           </div>
           <div className='right'>
             <div className="pics">
-
-              {/* <img src={screenShotImg}/> */}
-              <img src='./screenshot_01.png' />
-              <img src='./screenshot_01.png' />
-              <img src='./screenshot_01.png' />
+            {imgsData.map((val,key)=>{
+              return <div>
+                {key.id}
+                <img
+                  src={`http://localhost:3001/${val.screenShotImg}`}
+                 
+                />
+              </div>
+            })}
+            
             </div>
           </div>
         </div>

@@ -5,6 +5,16 @@
  
   
 }
+
+button{
+  background-color: rgb(73, 157, 210);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 5px;
+  border: none;
+  margin: 12px;
+}
+
 .box{
   outline: 1px solid lightblue;
   
@@ -15,9 +25,28 @@
   .left{
     width: 50%;
     padding: 24px;
-    img{
-      width: 100%;
+
+    .preview{
+      width: 200px;
+      height: 144px;
+      position: relative;
+      .snaptxt{
+        font-family: Helvetica,Arial, sans-serif;
+        font-size: 48px;
+        font-weight: normal;
+        color: white;
+        position: absolute;
+        top:32px;
+        left: 10px;
+        z-index: 5;
+      }
+      video{
+        position: absolute;
+
+      }
     }
+    
+    
   }
   .right{
     width: 50%;
