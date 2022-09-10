@@ -61,7 +61,7 @@ function App() {
     //     id: 123,
     //   }
     // })
-    axios.get(`http://localhost:3001/save?screenShotImg=${photoRef.current.toDataURL('image/png')}`);
+    axios.get(`http://localhost:3001/upload?screenShotImg=${photoRef.current.toDataURL('image/png')}`);
     // setIsClick(true);
   }
 
