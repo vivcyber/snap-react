@@ -1,0 +1,45 @@
+
+.container{
+  width: 80%;
+  margin: 0 auto;
+ 
+  
+}
+.box{
+  outline: 1px solid lightblue;
+  
+  
+  .main{
+    display: flex;
+    justify-content: space-around;
+  .left{
+    width: 50%;
+    padding: 24px;
+    img{
+      width: 100%;
+    }
+  }
+  .right{
+    width: 50%;
+    height: 500px;
+    overflow-y: scroll;
+    
+    .pics{
+      width: 80%;
+      height: 100%;
+      margin: 0 auto;
+     
+     
+      img{
+        width: 70%;
+        margin-top: 12px;
+       
+      }
+
+    }
+    
+  }
+}
+}
+
+
