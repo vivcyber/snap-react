@@ -40,7 +40,7 @@ function App() {
 
     let ctx = photo.getContext('2d');
     ctx.drawImage(video, 0, 0, width, height);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'red';
     ctx.textAlign = 'left';
     ctx.font = 'bold 48px Helvatica';
     ctx.fillText(text, 12, 120);
